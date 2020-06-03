@@ -1,0 +1,12 @@
+{
+  "name": "apollo-server-impl",
+  "version": "1.0.0",
+  "description": "Basic implementation of an Apollo Server federation",
+  "main": "index.js",
+  "author": "Aaron",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.14.1",
+    "graphql": "^15.0.0"
+  }
+}
