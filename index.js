@@ -1,4 +1,7 @@
-const { ApolloServer, gql } = require('apollo-server');
+import pkg from 'apollo-server';
+import { people, purchases } from './source/mock.js';
+
+const { ApolloServer, gql } = pkg;
 
 const typeDefs = gql`
 
@@ -45,41 +48,15 @@ const typeDefs = gql`
     }
 `;
 
-const allPeople = [
-    {
-        id: 1,
-        name: 'Bill Gates',
-        network: [2, 4]
-    },
-    {
-        id: 2,
-        name: 'Tom Hanks',
-        network: [3]
-    },
-    {
-        id: 3,
-        name: 'Will Brazil',
-        network: [4]
-
-    },
-    {
-        id: 4,
-        name: 'Josh Luber',
-        network: [1, 2, 3]
-    }
-]
-
-const allPurchases = []
-
 const resolvers = {
     Query: {
-        allPeople: () => allPeople,
-        allPurchases: () => allPurchases,
+        allPeople: () => people,
+        allPurchases: () => purchases,
         person: (_, { id }, __, ___) => staticPeople.find(person => (person.id === id))
     },
     Mutation: {
         makePurchase: (_, { person, item }, __, ___) => {
-            allPurchases.push({
+            purchases.push({
                 date: "Today",
                 buyer: {
                     id: person.id,
@@ -89,7 +66,7 @@ const resolvers = {
                 },
                 item
             })
-            return allPurchases;
+            return purchases;
         }
     }
 }
