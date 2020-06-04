@@ -13,7 +13,6 @@ export const people = [
         id: 3,
         name: 'Will Brazil',
         network: [4]
-
     },
     {
         id: 4,

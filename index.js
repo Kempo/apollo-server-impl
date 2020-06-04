@@ -1,40 +1,40 @@
 import pkg from 'apollo-server';
 import { people, purchases } from './source/mock.js';
+import crypto from 'crypto';
 
 const { ApolloServer, gql } = pkg;
-
+/**
+ * TODO: error handling, federation
+ */
 const typeDefs = gql`
-
-    input PersonInput {
-        id: ID!
-        name: String!
-    }
 
     input ItemInput {
         name: String!
-        brand: String!
+        brand: String
     }
 
     type Person {
         id: ID!
         name: String!
         network: [ID]
-        purchases: [Purchase]
+        # purchases keep track
     }
 
     type Item {
         name: String!
-        brand: String!
+        brand: String
     }
 
     type Purchase {
-        date: Date
-        item: Item
+        id: ID!
+        date: Date!
+        item: Item!
         buyer: Person
+        shipped: Boolean
     }
 
     type Date {
-        date: String
+        date: String!
     }
 
     type Query {
@@ -44,7 +44,8 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        makePurchase(person: PersonInput, item: ItemInput): [Purchase]
+        makePurchase(buyer: ID, item: ItemInput): String,
+        finalizePurchase(id: String): String
     }
 `;
 
@@ -52,21 +53,23 @@ const resolvers = {
     Query: {
         allPeople: () => people,
         allPurchases: () => purchases,
-        person: (_, { id }, __, ___) => staticPeople.find(person => (person.id === id))
+        person: (_, { id }, __, ___) => people.find(person => (person.id === id))
     },
     Mutation: {
-        makePurchase: (_, { person, item }, __, ___) => {
+        makePurchase: (_, { buyer, item }, __, ___) => {
+            const pseudoID = crypto.randomBytes(10).toString('hex');
             purchases.push({
+                id: pseudoID,
                 date: "Today",
-                buyer: {
-                    id: person.id,
-                    name: person.name,
-                    network: [],
-                    purchases: []
-                },
-                item
+                buyer: people[buyer - 1], // way to make query here?
+                item,
+                shipped: false
             })
-            return purchases;
+            return `Purchase created! id: ${pseudoID}`;
+        },
+        finalizePurchase: (_, { id }, __, ___) => {
+            purchases.find(purchase => (purchase.id === id)).shipped = true;
+            return `Purchase shipped! id: ${id}`;
         }
     }
 }
