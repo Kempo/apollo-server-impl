@@ -5,6 +5,10 @@ import crypto from 'crypto';
 const { ApolloServer, gql } = pkg;
 /**
  * TODO: error handling, federation
+ * services: 
+ * - person
+ * - item
+ * - fulfillment (purchase)
  */
 const typeDefs = gql`
 
@@ -27,20 +31,17 @@ const typeDefs = gql`
 
     type Purchase {
         id: ID!
-        date: Date!
+        date: String!
         item: Item!
         buyer: Person
         shipped: Boolean
     }
 
-    type Date {
-        date: String!
-    }
-
     type Query {
         allPeople: [Person]
-        person(id: ID): Person
         allPurchases: [Purchase]
+        person(id: Int): Person # the type for person ID
+        purchase(id: String): Purchase # the type for purchase ID 
     }
 
     type Mutation {
@@ -53,7 +54,8 @@ const resolvers = {
     Query: {
         allPeople: () => people,
         allPurchases: () => purchases,
-        person: (_, { id }, __, ___) => people.find(person => (person.id === id))
+        person: (_, { id }, __, ___) => people.find(person => (person.id === id)),
+        purchase: (_, { id }, __, ___) => purchases.find(purchase => (purchase.id === id))
     },
     Mutation: {
         makePurchase: (_, { buyer, item }, __, ___) => {
