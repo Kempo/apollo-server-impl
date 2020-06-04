@@ -45,7 +45,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        makePurchase(buyer: ID, item: ItemInput): String,
+        makePurchase(buyer: Int, item: ItemInput): String,
         finalizePurchase(id: String): String
     }
 `;
@@ -63,7 +63,7 @@ const resolvers = {
             purchases.push({
                 id: pseudoID,
                 date: "Today",
-                buyer: people[buyer - 1], // way to make query here?
+                buyer: people.find(person => (person.id === buyer)), // way to make query here?
                 item,
                 shipped: false
             })
