@@ -15,7 +15,7 @@ const typeDefs = gql`
 
     extend type Query {
         allPeople: [Person]
-        person(id: Int): Person # the type for person ID
+        person(id: ID): Person # the type for person ID
     }
 `;
 

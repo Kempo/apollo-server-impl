@@ -36,14 +36,14 @@ const typeDefs = gql`
     }
 
     extend type Mutation {
-        makePurchase(buyer: Int, sku: ID): String,
+        makePurchase(buyer: ID, sku: ID): String,
         finalizePurchase(id: String): String
     }
 `;
 
 const resolvers = {
     Person: {
-        recentPurchases: (person) => recentPurchases = purchases.filter(pr => (pr.buyer === person.id)),
+        recentPurchases: ({ id }) => purchases.filter(pr => (pr.buyer.id === id))
     },
     Query: {
         purchase: (_, { id }, __, ___) => purchases.find(p => (p.id === id)),
