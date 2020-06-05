@@ -22,3 +22,32 @@ export const people = [
 ];
 
 export const purchases = []
+/*
+{
+    id: ad2fqm0ksd0012,
+    date: Today,
+    item: {
+        sku: "JORDAN",
+        name: "Air Jordan 1s",
+        brand: "Nike"
+    },
+    buyer: {
+        id: 5,
+        name: "Hi"
+    },
+    shipped: false
+}
+*/
+
+export const items = [
+    {
+        sku: "JORDAN",
+        name: "Air Jordan 1s",
+        brand: "Nike"
+    },
+    {
+        sku: "SMITHS",
+        name: "Stan Smiths",
+        brand: "Adidas"
+    }
+]

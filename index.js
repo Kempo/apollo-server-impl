@@ -1,8 +1,18 @@
-import pkg from 'apollo-server';
-import { people, purchases } from './source/mock.js';
-import crypto from 'crypto';
+import spkg from 'apollo-server';
+import gpkg from '@apollo/gateway';
 
-const { ApolloServer, gql } = pkg;
+const port = 4000;
+const { ApolloServer } = spkg;
+const { ApolloGateway } = gpkg;
+
+const gateway = new ApolloGateway({
+    serviceList: [
+        { name: 'persons', url: 'http://localhost:4001' },
+        { name: 'items', url: 'http://localhost:4002' },
+        { name: 'purchases', url: 'http://localhost:4003' }
+    ]
+})
+
 /**
  * TODO: error handling, federation
  * services: 
@@ -10,6 +20,7 @@ const { ApolloServer, gql } = pkg;
  * - item
  * - fulfillment (purchase)
  */
+/*
 const typeDefs = gql`
 
     input ItemInput {
@@ -50,6 +61,7 @@ const typeDefs = gql`
     }
 `;
 
+
 const resolvers = {
     Query: {
         allPeople: () => people,
@@ -60,9 +72,10 @@ const resolvers = {
     Mutation: {
         makePurchase: (_, { buyer, item }, __, ___) => {
             const pseudoID = crypto.randomBytes(10).toString('hex');
+
             purchases.push({
                 id: pseudoID,
-                date: "Today",
+                date: (new Date().toISOString()),
                 buyer: people.find(person => (person.id === buyer)), // way to make query here?
                 item,
                 shipped: false
@@ -75,9 +88,13 @@ const resolvers = {
         }
     }
 }
+*/
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+    gateway,
+    subscriptions: false
+})
 
-server.listen().then(({ url }) => {
+server.listen({ port }).then(({ url }) => {
     console.log(`Apollo Server running at ${url}`);
 })
