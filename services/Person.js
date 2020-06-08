@@ -20,6 +20,13 @@ const typeDefs = gql`
 `;
 
 const resolvers = {
+    Person: {
+        __resolveReference(obj) {
+            console.log('person resolve reference');
+            console.log(obj);
+            return people.find(person => (person.id === obj.id));
+        }
+    },
     Query: {
         allPeople: () => people,
         person: (_, { id }, __, ___) => people.find(person => (person.id === id)),

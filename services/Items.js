@@ -8,6 +8,12 @@ const { buildFederatedSchema } = fed;
 
 const typeDefs = gql`
 
+    input ItemInput {
+        sku: String!
+        name: String!
+        brand: String!
+    }
+
     type Item @key(fields: "sku") @key(fields: "name") @key(fields: "brand") {
         sku: String!
         name: String!
@@ -18,12 +24,23 @@ const typeDefs = gql`
         item(sku: String): Item
         allItems: [Item]
     }
+
+    extend type Mutation {
+        createItem(input: ItemInput): Item
+    }
 `;
 
 const resolvers = {
+    Item: {
+        __resolveReference(obj) {
+            console.log('item resolve reference')
+            console.log(obj);
+            return items.find(item => (item.sku === obj.sku));
+        }
+    },
     Query: {
         allItems: () => items,
-        item: (_, { sku }, __, ___) => items.find(item => (item.sku === sku)),
+        item: (_, { sku }, __, ___) => items.find(item => (item.sku === sku))
     }
 }
 
@@ -32,5 +49,5 @@ const server = new ApolloServer({
 })
 
 server.listen({ port }).then(({ url }) => {
-    console.log(`Item service running at ${url}`);
+    console.log(`Items service running at ${url}`);
 })

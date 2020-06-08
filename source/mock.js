@@ -21,23 +21,15 @@ export const people = [
     }
 ];
 
-export const purchases = []
-/*
-{
-    id: ad2fqm0ksd0012,
-    date: Today,
-    item: {
-        sku: "JORDAN",
-        name: "Air Jordan 1s",
-        brand: "Nike"
-    },
-    buyer: {
-        id: 5,
-        name: "Hi"
-    },
-    shipped: false
-}
-*/
+export const purchases = [
+    {
+        id: "21d4a84d48ebea6d5d59",
+        shipped: false,
+        date: "today",
+        item: { sku: "SMITHS" }, // look into this detail
+        buyer: { id: "3" }
+    }
+]
 
 export const items = [
     {
