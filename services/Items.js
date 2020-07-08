@@ -33,7 +33,6 @@ const typeDefs = gql`
 const resolvers = {
     Item: {
         __resolveReference(obj) {
-            console.log('item resolve reference')
             console.log(obj);
             return items.find(item => (item.sku === obj.sku));
         }

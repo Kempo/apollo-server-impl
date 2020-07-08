@@ -2,24 +2,71 @@ export const people = [
     {
         id: '1',
         name: 'Bill Gates',
-        network: ['1', '4']
+        network: [{id: '1'}, {id: '4'}]
     },
     {
         id: '2',
         name: 'Tom Hanks',
-        network: ['3']
+        network: [{id: '3'}]
     },
     {
         id: '3',
         name: 'Will Brazil',
-        network: ['4']
+        network: [{id: '4'}]
     },
     {
         id: '4',
         name: 'Josh Luber',
-        network: ['1', '2', '3']
+        network: [{id: '1'}, {id: '2'}, {id: '3'}]
     }
 ];
+
+export const networks = [
+    {
+        id: '',
+        network: []
+    },
+    {
+        id: '',
+        network: []
+    },
+    {
+
+    }
+]
+
+/*
+export const people = [
+    {
+        id: '1',
+        name: 'Bill Gates',
+        network: [{id: '1'}, {id: '4'}]
+    },
+    {
+        id: '2',
+        name: 'Tom Hanks',
+        network: [{id: '3'}]
+    },
+    {
+        id: '3',
+        name: 'Will Brazil',
+        network: [{id: '4'}]
+    },
+    {
+        id: '4',
+        name: 'Josh Luber',
+        network: [{id: '1'}, {id: '2'}, {id: '3'}]
+    }
+];
+*/
+
+/**
+ * 
+ * network: {
+ *  people: []
+ * 
+ * }
+ */
 
 export const purchases = [
     {

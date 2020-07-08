@@ -9,8 +9,8 @@ const { buildFederatedSchema } = fed;
 const typeDefs = gql`
     type Person @key(fields: "id") {
         id: ID!
-        name: String!
-        network: [ID]
+        name: String
+        network: [Person]
     }
 
     extend type Query {
@@ -22,7 +22,7 @@ const typeDefs = gql`
 const resolvers = {
     Person: {
         __resolveReference(obj) {
-            console.log('person resolve reference');
+            console.log('person resolver');
             console.log(obj);
             return people.find(person => (person.id === obj.id));
         }

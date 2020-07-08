@@ -24,7 +24,6 @@ const typeDefs = gql`
 
     extend type Item @key(fields: "sku") {
         sku: String! @external
-        name: String! @external
     }
 
     extend type Query {
